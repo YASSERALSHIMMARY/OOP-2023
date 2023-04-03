@@ -2,140 +2,80 @@ package ie.tudublin;
 
 import processing.core.PApplet;
 
-public class BugZap extends PApplet {
+public class BugZap extends PApplet 
+{
+
+	float playerX, playerY, playerWidth;
+	float bugX, bugY, bugWidth;
+
+	int score = 0;
+	float halfPlayer, halfBug;
+
 	public void settings() {
-		size(1000, 1000);
+		size(500, 500);
 	}
 
 	public void setup() {
-		reset();
+		colorMode(HSB);
+		background(0);
+		smooth();
+
+		playerX = width *0.5f;
+		playerY = height - 100;	
+		playerWidth = 50;
+		halfPlayer = playerWidth * 0.5f;
 	}
+	
 
-	float playerX, playerY;
-	float playerSpeed = 5;
-	float playerWidth = 40;
-	float halfPlayerWidth = playerWidth / 2;
-
-	float bugX, bugY, bugWidth = 100;
-	float halfBugWidth = bugWidth / 2;
-
-	int score = 0;
-
-	void reset() {
-		resetBug();
-		playerX = width / 2;
-		playerY = height - 50;
-	}
+	
 
 	void resetBug() {
-		bugX = random(halfBugWidth, width - halfBugWidth);
 		bugY = 50;
-	}
-
-	void drawBug(float x, float y) {
-		// Draw the bug
-		stroke(255);
-		float saucerHeight = bugWidth * 0.7f;
-		line(x, y - saucerHeight, x - halfBugWidth, y);
-		line(x, y - saucerHeight, x + halfBugWidth, y);
-		// line(x - halfBugWidth, y, x - halfBugWidth, y);
-		line(x - halfBugWidth, y, x + halfBugWidth, y);
-		float feet = bugWidth * 0.1f;
-		line(x - feet, y, x - halfBugWidth, y + halfBugWidth);
-		line(x + feet, y, x + halfBugWidth, y + halfBugWidth);
-
-		feet = bugWidth * 0.3f;
-		line(x - feet, y, x - halfBugWidth, y + halfBugWidth);
-		line(x + feet, y, x + halfBugWidth, y + halfBugWidth);
-
-		float eyes = bugWidth * 0.1f;
-		line(x - eyes, y - eyes, x - eyes, y - eyes * 2f);
-		line(x + eyes, y - eyes, x + eyes, y - eyes * 2f);
-
-	}
-
-	void drawPlayer(float x, float y, float w) {
-		stroke(255);
-		float playerHeight = w / 2;
-		line(x - halfPlayerWidth, y + playerHeight, x + halfPlayerWidth, y + playerHeight);
-		line(x - halfPlayerWidth, y + playerHeight, x - halfPlayerWidth, y + playerHeight * 0.5f);
-		line(x + halfPlayerWidth, y + playerHeight, x + halfPlayerWidth, y + playerHeight * 0.5f);
-
-		line(x - halfPlayerWidth, y + playerHeight * 0.5f, x - (halfPlayerWidth * 0.8f), y + playerHeight * 0.3f);
-		line(x + halfPlayerWidth, y + playerHeight * 0.5f, x + (halfPlayerWidth * 0.8f), y + playerHeight * 0.3f);
-
-		line(x - (halfPlayerWidth * 0.8f), y + playerHeight * 0.3f, x + (halfPlayerWidth * 0.8f),
-				y + playerHeight * 0.3f);
-
-		line(x, y, x, y + playerHeight * 0.3f);
-
-	}
-
-	public void keyPressed() {
+		bugWidth = 50;
+		halfBug = bugWidth * 0.5f;
+		bugX = random(halfBug, width - halfBug);
 		
-		if (keyCode == LEFT) {
-			if (playerX > halfPlayerWidth) {
-				playerX -= playerSpeed;
-			}
+	}
+
+	void drawPlayer(float x, float y, float w) 		
+	{
+		noFill();
+		stroke(255);
+		rectMode(CENTER);
+		rect(x,y,w,w);
+		line(x,y - halfPlayer, x, y-halfPlayer * 2);
+
+
+	}
+
+	public void draw(){
+
+		background(0);
+		drawPlayer(playerX,playerY,playerWidth);
+
+	}
+	public void keyPressed() 
+	{
+		if (keyCode == LEFT)
+		{
+			playerX --;
 		}
-		if (keyCode == RIGHT) {
-			if (playerX < width - halfPlayerWidth) {
-				playerX += playerSpeed;
-			}
+		if (keyCode == RIGHT)
+		{
+			playerX ++;
 		}
 		if (keyCode == ' ')
 		{
-			if (playerX > bugX - halfBugWidth && playerX < bugX + halfBugWidth)
-			{
-				line(playerX, playerY, playerX, bugY);
-				score ++;
-				resetBug();
-			}
-			else
-			{
-				line(playerX, playerY, playerX, 0);
-			}
-		}
-	}
-
-	void moveBug() {
-		if ((frameCount % 30) == 0) {
-			bugX += random(-5, 5);
-			if (bugX < halfBugWidth) {
-				bugX = halfBugWidth;
-			}
-			if (bugX > width - halfBugWidth) {
-				bugX = width - halfBugWidth;
-			}
-			bugY += 2;
-		}
-	}
-
-	int gameMode = 0;
-
-	public void draw() {
-		background(0);
-		fill(255);
-		text("Score: " + score, 50, 100);
-		if (gameMode == 0)
-		{
-			fill(255);
-			drawPlayer(playerX, playerY, playerWidth);
-			drawBug(bugX, bugY);
-			moveBug();
-
-			text("Score: " + score, 20, 20);
+			line(playerX,playerY -halfPlayer,playerX,0);
 		}
 		else
 		{
-			textAlign(CENTER, CENTER);
-			text("GAME OVER!!!", width / 2, height / 2);
+			line(playerX, playerY, playerX, 0);
+			
 		}
-
-		if (bugY > height - 50)
-		{
-			gameMode = 1;
-		}
+		
 
 	}
+
+	
 }

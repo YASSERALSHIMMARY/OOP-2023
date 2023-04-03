@@ -1,46 +1,55 @@
 package ie.tudublin;
 
-import com.jogamp.nativewindow.util.Rectangle;
-
 import processing.core.PApplet;
 
-public class HelloProcessing extends PApplet
-{
+public class HelloProcessing extends PApplet {
+	int mode = 0;
 
-	public void settings()
-	{
+	public void settings() {
 		size(500, 500);
 	}
 
 	public void setup() {
-		colorMode(HSB);
-		background(0);
-
-		x1 = random(0, width);
-		x2 = random(0, width);
-		y1 = random(0, height);
-		y2 = random(0, height);
-
-		float range = 5;
-
-		x1dir = random(-range, range);
-		x2dir = random(-range, range);
-		y1dir = random(-range, range);
-		y2dir = random(-range, range);
-
-		smooth();
-		
+		colorMode(HSB);		
+		// strokeWeight(0);
+		noStroke();
 	}
 
-	float x1, y1, x2, y2;
-	float x1dir, x2dir, y1dir, y2dir;
-	float c = 0;
-	
-	public void draw()
-	{	
-		
-		
+	public void keyPressed() {
+		mode = key - '0';
+		println(mode);
 
-		
+	}
+
+	int i = 0, j = 0;
+	float off;
+
+	public void draw() {
+		background(255);
+		//fill(255);
+
+		switch (mode) {
+			case 0:
+
+				int numberCircle = (int) max(1, mouseX / 50.0f);
+				float d = width / (float) numberCircle;
+				for (j = 0; j < 10; j++) {
+					for (i = 0; i < 10; i++) {
+
+						float x = (d * 0.5f) + (d * i);
+						float y = (d * 0.5f) + (d * j);
+						float c = ((i + j) / ((numberCircle - 1) * 2.0f)) * 255.0f;
+						fill((c + off) % 256, 255, 255);
+						circle(x, y, d);
+					}
+				}
+				off += (mouseY / 50.0f);
+				break;
+			case 1:
+				break;
+			default:
+				break;
+		}
+
 	}
 }
