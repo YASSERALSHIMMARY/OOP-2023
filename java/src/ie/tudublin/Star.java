@@ -13,8 +13,8 @@ public class Star
     private float zG;
     private float absMag;
 
-    
-//
+  //comment 2  
+//comment 1
     @Override
     public String toString() {
         return "Star [absMag=" + absMag + ", displayName=" + displayName + ", distance=" + distance + ", hab=" + hab
