@@ -595,4 +595,4 @@ Some assignments from previous years:
 
 - https://www.youtube.com/watch?v=uykz5mCjV0w
 
-- https://www.youtube.com/watch?v=sPjZSRCmt1U
+- https://www.youtube.com/watch?v=sPjZSRCmt1U# StarMap
